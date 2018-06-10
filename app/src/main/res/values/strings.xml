@@ -37,4 +37,5 @@
     <string name="product_supplier_email">Supplier Email</string>
     <string name="cannot_contract_supplier">Supplier does not provide contact information.</string>
     <string name="action_order">Order</string>
+    <string name="delete_all">Delete All</string>
 </resources>
