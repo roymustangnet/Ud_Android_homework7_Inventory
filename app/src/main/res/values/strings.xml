@@ -39,6 +39,7 @@
     <string name="action_order">Order</string>
     <string name="delete_all">Delete All</string>
     <string name="confirm_to_delete_one">Are you sure to delete this product?</string>
+    <string name="confirm_to_delete_all">Are you sure to delete all products?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 </resources>

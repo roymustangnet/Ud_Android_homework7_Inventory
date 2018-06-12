@@ -1,9 +1,11 @@
 package com.example.android.inventory;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
 import com.example.android.inventory.data.InventoryDbHelper;
@@ -145,7 +148,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void deleteAll() {
-        getContentResolver().delete(ProductEntry.CONTENT_URI, null, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Dialog：");
+        builder.setMessage(getString(R.string.confirm_to_delete_all));
+        builder.setIcon(R.mipmap.ic_launcher_round);
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getContentResolver().delete(ProductEntry.CONTENT_URI, null, null);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }
