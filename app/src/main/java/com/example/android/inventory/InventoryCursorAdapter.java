@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventory.data.InventoryContract.ProductEntry;
+import com.example.android.inventory.utils.ToastUtil;
 
 public class InventoryCursorAdapter extends CursorAdapter{
     public InventoryCursorAdapter(Context context, Cursor c) {
@@ -54,13 +55,13 @@ public class InventoryCursorAdapter extends CursorAdapter{
                     values.put(ProductEntry.COLUMN_PROD_NUM, currentNum);
                     int rowsAffected = context.getContentResolver().update(currentItemUri, values, null, null);
                     if(rowsAffected == 0) {
-                        Toast.makeText(context, context.getString(R.string.some_error_with_buy), Toast.LENGTH_SHORT).show();
+                        ToastUtil.show(context, context.getString(R.string.some_error_with_buy));
                     } else {
-                        Toast.makeText(context, context.getString(R.string.has_buied_one_product), Toast.LENGTH_SHORT).show();
+                        ToastUtil.show(context, context.getString(R.string.has_buied_one_product));
                         textViewSupplier.setText(currentNum + "");
                     }
                 } else {
-                    Toast.makeText(context, context.getString(R.string.buy_must_not_zero), Toast.LENGTH_SHORT).show();
+                    ToastUtil.show(context, context.getString(R.string.buy_must_not_zero));
                 }
 
             }

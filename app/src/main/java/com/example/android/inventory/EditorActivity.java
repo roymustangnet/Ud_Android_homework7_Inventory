@@ -1,8 +1,10 @@
 package com.example.android.inventory;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -111,7 +113,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 return true;
             case R.id.action_delete:
                 deleteProduct();
-                finish();
                 return true;
             case R.id.action_order:
                 contractSupplier();
@@ -143,13 +144,35 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     private void deleteProduct() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Dialog：");
+        builder.setMessage(getString(R.string.confirm_to_delete_one));
+        builder.setIcon(R.mipmap.ic_launcher_round);
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int rowsAffected = getContentResolver().delete(mCurrentProductUri,null, null);
+                if (rowsAffected == 1){
+                    Toast.makeText(EditorActivity.this, getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(EditorActivity.this, getString(R.string.delete_error), Toast.LENGTH_SHORT).show();
+                }
+                dialog.dismiss();
+                finish();
 
-        int rowsAffected = getContentResolver().delete(mCurrentProductUri,null, null);
-        if (rowsAffected == 1){
-            Toast.makeText(this, getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, getString(R.string.delete_error), Toast.LENGTH_SHORT).show();
-        }
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 
     private boolean insertProduct() {

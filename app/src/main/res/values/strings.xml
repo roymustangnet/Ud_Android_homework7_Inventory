@@ -38,4 +38,7 @@
     <string name="cannot_contract_supplier">Supplier does not provide contact information.</string>
     <string name="action_order">Order</string>
     <string name="delete_all">Delete All</string>
+    <string name="confirm_to_delete_one">Are you sure to delete this product?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
